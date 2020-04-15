@@ -1,0 +1,36 @@
+<main>
+    <div class="data-loading" [ngClass]="{'processing': processing}" *ngIf="dataLoading || processing">
+        <mat-progress-spinner *ngIf="dataLoading" mode="indeterminate"></mat-progress-spinner>
+        <mat-progress-bar *ngIf="processing" mode="indeterminate"></mat-progress-bar>
+    </div> 
+
+    <header>
+        <h1>Future Rides</h1>
+    </header>
+    
+    <section *ngIf="!dataLoading" [@fadeInUp]="dataSource.data.length">
+        <mat-card *ngFor="let user of dataSource.data" class="content-wrapper">
+            <div class="image-wrapper">
+                <img [src]="'./assets/images/users/' + user.image" />
+            </div>
+
+            <h2>{{ user.name }}</h2>
+
+            <div>
+                <mat-icon class="material-icons-sharp">mail</mat-icon>
+                <a [href]="'mailto:'+ user.email" target="_blank">{{ user.email }}</a>
+            </div>
+
+            <div>
+                <mat-icon class="material-icons-sharp">local_phone</mat-icon>
+                <a [href]="'call:'+ user.tel" target="_blank">{{ user.tel }}</a>              
+            </div> 
+            
+            <button mat-raised-button color='warn' [disabled]="processing || user.startTrip" (click)="onStartTrip(user)" [ngClass]="{'trip-started': user.startTrip}">
+                {{ user.startTrip ? 'Trip started' : 'Start Trip' }}
+            </button>
+        </mat-card>
+
+        <p *ngIf="!dataLoading && !dataSource.data.length" class="no-rides-available">You have no clients at the moment.</p>
+    </section>   
+</main>

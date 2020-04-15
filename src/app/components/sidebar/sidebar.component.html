@@ -1,0 +1,30 @@
+<main [@fadeInLeft]>
+    <header>
+        <button class="fade-in-left user-img-btn" mat-button>
+            <img src="./assets/images/users/{{ user.image }}" [matMenuTriggerFor]="profileCard" /> 
+        </button>
+        <button class="fade-in-left" *ngIf="!user.rider" mat-button routerLink="/home/rides" routerLinkActive="active-link" matTooltip="Available rides" matTooltipPosition="right">
+            <mat-icon class="material-icons-sharp">directions_car</mat-icon>
+        </button>
+        <button class="fade-in-left" *ngIf="user.rider" mat-button routerLink="/home/futureRides" routerLinkActive="active-link" matTooltip="Future rides" matTooltipPosition="right">
+            <mat-icon class="material-icons-sharp">departure_board</mat-icon>
+        </button>
+
+        <mat-menu class="user-profile-card-menu" #profileCard="matMenu" yPosition="below" xPosition="after" [overlapTrigger]="false">
+            <div (click)="$event.stopPropagation()" class="user-profile-img-wrapper">
+                <img src="./assets/images/users/{{ user.image }}" />
+            </div>
+            <div (click)="$event.stopPropagation()" class="user-profile-card-details">
+                <p>{{ user.name }}</p>
+            </div>
+            <button mat-menu-item (click)="onLogOut()">
+                <mat-icon class="material-icons-sharp">exit_to_app</mat-icon>
+                <span>Log out</span>
+            </button>
+        </mat-menu>        
+    </header>
+
+    <button routerLink="/home/profile" routerLinkActive="active-link" matTooltip="Manage account" matTooltipPosition="right" mat-button  class="fade-in-left settings-btn">
+        <mat-icon class="material-icons-sharp">settings</mat-icon>
+    </button> 
+</main>

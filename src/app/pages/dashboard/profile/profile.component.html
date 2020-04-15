@@ -1,0 +1,95 @@
+<main class="scrollbar_white">
+    <mat-card>
+        <section [@fadeInUp]>
+            <h3 class="fade-in-up">Manage your profile. </h3>
+
+            <mat-form-field class="fade-in-up">
+                <mat-label>Name</mat-label>
+                <input matInput [formControl]="name" placeholder="Mark Kajubi" [disabled]="processing">
+                <mat-error *ngIf="name.invalid">{{ getNameErrorMessage() }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="fade-in-up">
+                <mat-label>Email</mat-label>
+                <input matInput [formControl]="email" [disabled]="processing">
+                <mat-error *ngIf="email.invalid">{{ getEmailErrorMessage() }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="fade-in-up">
+                <mat-label>Mobile Number</mat-label>
+                <span matPrefix>+257 &nbsp;</span>
+                <input matInput [formControl]="mobilenumber" placeholder="78-375-473" [disabled]="processing">
+                <mat-error *ngIf="mobilenumber.invalid">{{ getMobileNumberErrorMessage() }}</mat-error>
+            </mat-form-field>
+
+            <h4 class="fade-in-up">Password</h4>
+            <mat-form-field class="fade-in-up">
+                <mat-label>Password</mat-label>
+                <mat-icon matSuffix class="material-icons-sharp" (click)="togglePassword = !togglePassword">{{ togglePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                <input matInput [formControl]="password" [type]="togglePassword ? 'text' : 'password'" [disabled]="processing">
+                <mat-error *ngIf="password.invalid">{{ getPasswordErrorMessage() }}</mat-error>
+            </mat-form-field>
+            
+            <mat-form-field class="fade-in-up">
+                <mat-label>Confirm Password</mat-label>
+                <mat-icon matSuffix class="material-icons-sharp" (click)="toggleConfirmPassword = !toggleConfirmPassword">{{ toggleConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                <input matInput [formControl]="confirmedPassword" [type]="togglePassword ? 'text' : 'password'" [disabled]="processing">
+                <mat-error *ngIf="confirmedPassword.invalid && confirmedPassword.touched">Passwords do not match</mat-error>
+            </mat-form-field>
+            
+            <mat-checkbox
+                class="fade-in-up" 
+                [disabled]="processing"
+                [checked]="rider" 
+                color="primary" 
+                (change)="onChkboxChange($event)">
+                Do you want to give a ride?
+            </mat-checkbox>
+            
+        </section>
+
+        <section *ngIf="rider">
+            <mat-form-field class="fadeInDown _delay1ms">
+                <mat-label>Capacity</mat-label>
+                <input matInput [formControl]="capacity" type='digit' [disabled]="processing">
+                <mat-error *ngIf="capacity.invalid">{{ getCapacityErrorMessage() }}</mat-error>
+            </mat-form-field>         
+            
+            <mat-form-field class="fadeInDown _delay2ms">
+                <mat-label>Origin</mat-label>
+                <input placeholder="Where are you found?" matInput [disabled]="processing" [formControl]="origin" [matAutocomplete]="autoOrigin">
+                <mat-autocomplete #autoOrigin="matAutocomplete">
+                    <mat-option *ngFor="let o of originFilteredOptions | async" [value]="o.name">
+                    {{o.name}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="origin.invalid">{{ getOriginErrorMessage() }}</mat-error>      
+            </mat-form-field> 
+
+            <mat-form-field class="fadeInDown _delay3ms">
+                <mat-label>Destination</mat-label>
+                <input placeholder="Where are you heading?" matInput [disabled]="processing" [formControl]="destination" [matAutocomplete]="autoDestination">
+                <mat-autocomplete #autoDestination="matAutocomplete">
+                    <mat-option *ngFor="let d of destinationFilteredOptions | async" [value]="d.name">
+                    {{d.name}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="destination.invalid">{{ getDestinationErrorMessage() }}</mat-error>      
+            </mat-form-field> 
+        </section>
+        
+        <div class="btn-wrapper">
+            <button 
+                [ngClass]="{'inline-processing-btn': processing}" 
+                mat-raised-button 
+                matTooltip="Update the account"
+                class="login-btn fadeInUp _delay5ms" 
+                color='primary'
+                [disabled]="processing || name.invalid || email.invalid || mobilenumber.invalid || password.invalid || invalidPassword || (capacity.invalid && rider) || (origin.invalid && rider) || (destination.invalid && rider)"
+                (click)="onUpdateAccount()">
+                <span *ngIf="!processing">Update account</span>
+                <app-inline-mat-spinner *ngIf="processing"></app-inline-mat-spinner>      
+            </button>  
+        </div>         
+    </mat-card>
+</main>

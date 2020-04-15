@@ -1,0 +1,121 @@
+<main [ngStyle]="{'grid-template-columns': userBookedRides.length ? 'auto 340px' : 'auto'}">
+    <div class="data-loading" [ngClass]="{'processing': processing}" *ngIf="dataLoading || processing">
+      <mat-progress-spinner *ngIf="dataLoading" mode="indeterminate"></mat-progress-spinner>
+      <mat-progress-bar *ngIf="processing" mode="indeterminate"></mat-progress-bar>
+    </div> 
+
+    <mat-card>
+      <header>
+        <h1>Available Rides</h1>
+
+        <mat-form-field class="fadeInUp _delay2ms">
+          <mat-label>Looking for a ride!</mat-label>
+          <mat-icon matPrefix class="material-icons-sharp">search</mat-icon>
+          <input matInput [disabled]="dataLoading || processing || !dataSource.data.length" (keyup)="applyFilter($event)">
+        </mat-form-field>
+      </header>
+
+      <section>
+        <table
+          mat-table 
+          [@fadeInUp]="dataSource.data.length"
+          [dataSource]="dataSource"
+          matSort
+          matSortActive="capacity"
+          matSortDisableClear
+          matSortDirection="asc">
+        
+          <!-- Count Column -->
+          <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+            <td mat-cell *matCellDef="let row; index as i"> {{ i + 1 }} </td>
+          </ng-container>
+      
+          <!-- Driver Column -->
+          <ng-container matColumnDef="driver">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Drivers </th>
+            <td mat-cell *matCellDef="let row">
+              <div class="driver-infor-wrapper">
+                <img [src]="'./assets/images/users/' + row.image" />
+                <span>{{row.name}}</span>
+              </div>
+            </td>
+          </ng-container>
+      
+          <!-- Capacity Column -->
+          <ng-container matColumnDef="capacity">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Capacity </th>
+            <td mat-cell *matCellDef="let row"> {{row.capacity}} </td>
+          </ng-container>
+      
+          <!-- Origin Column -->
+          <ng-container matColumnDef="origin">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Origin </th>
+            <td mat-cell *matCellDef="let row"> {{row.origin}} </td>
+          </ng-container>
+      
+          <!-- Destination Column -->
+          <ng-container matColumnDef="destination">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Destination </th>
+            <td mat-cell *matCellDef="let row"> {{row.destination}} </td>
+          </ng-container>
+      
+          <!-- Booking Column -->
+          <ng-container matColumnDef="booking">
+            <th mat-header-cell *matHeaderCellDef> Booking </th>
+            <td mat-cell *matCellDef="let row; index as i">
+              <button 
+                [disabled]="hasBookedRide(row) || processing"
+                color='primary'
+                mat-raised-button
+                matTooltip="Book this ride"
+                (click)="onBook(row, i)">
+                {{ hasBookedRide(row) ? 'Booked' : 'Book ride' }}
+              </button>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        
+        <p *ngIf="!dataLoading && !riders.length" class="no-rides-available">Sorry, There're no rides available at the moment.</p>
+      </section>    
+      <mat-paginator [disabled]="!riders.length" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </mat-card>
+
+    <mat-card *ngIf="userBookedRides.length" class="fadeInRight _delay3ms bookings">
+      <header>
+        Bookings
+      </header>
+
+      <section>
+        <div *ngFor="let booking of userBookedRides; let i = index" class="content-wrapper" [@fadeInRight]>
+          <mat-icon class="material-icons-sharp ride-icon fade-in-right">departure_board</mat-icon>
+
+          <div class="booking-details">
+            <h2 class="fade-in-right">{{ booking.name }}</h2>
+
+            <div class="fade-in-right">
+              <mat-icon class="material-icons-sharp">place</mat-icon>
+              <p>{{ booking.origin }} - {{ booking.destination }}</p>
+            </div>
+
+            <div class="fade-in-right">
+              <mat-icon class="material-icons-sharp">mail</mat-icon>
+              <a [href]="'mailto:'+ booking.email" target="_blank">{{ booking.email }}</a>
+            </div>
+
+            <div class="fade-in-right">
+              <mat-icon class="material-icons-sharp">local_phone</mat-icon>
+              <a [href]="'call:'+ booking.tel" target="_blank">{{ booking.tel }}</a>              
+            </div>
+          </div>
+
+          <button mat-button (click)="onRemove(booking, i)" matTooltip="Delete the booking.">
+            <mat-icon class="material-icons-sharp">clear</mat-icon>
+          </button>
+        </div>
+      </section>
+    </mat-card>
+</main>

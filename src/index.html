@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ride</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="An application by IBI Africa that enables riders to find and reserve rides." name="keywords">
+  <link rel="shortcut icon" href="./assets/images/logo/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="./assets/images/logo/favicon.ico" type="image/x-icon">  
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style type="text/css">
+    .loading-wrapper{
+      position: absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      top:0;
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      background-color:#fff;
+      overflow: hidden;
+      z-index: 1;
+    }
+  
+    .loading-wrapper > img{
+      width: 80px;
+    }  
+  </style>  
+</head>
+<body>
+  <app-root>
+    <div class="loading-wrapper">
+      <img src="./assets/images/loader/loader.gif" alt="loading..." />
+    </div>       
+  </app-root>
+</body>
+</html>

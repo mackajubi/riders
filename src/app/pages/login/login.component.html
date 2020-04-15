@@ -1,0 +1,53 @@
+<main class="fadeIn _delay3ms">
+    <mat-card>
+        <img src="./assets/images/ride.png" class="fadeInDown _delay3ms" alt='Get a ride image' />
+
+        <section>
+            <h1 class="fadeInUp _delay2ms">Please login & Ride with us </h1>
+
+            <mat-form-field class="fadeInUp _delay3ms">
+                <mat-icon matSuffix class="material-icons-sharp">mail</mat-icon>
+                <mat-label>Email</mat-label>
+                <input matInput [formControl]="email" [disabled]="processing">
+                <mat-error *ngIf="email.invalid">{{ getEmailErrorMessage() }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="fadeInUp _delay4ms">
+                <mat-label>Password</mat-label>
+                <mat-icon matSuffix class="material-icons-sharp" (click)="togglePassword = !togglePassword">{{ togglePassword ? 'visibility_off' : 'visibility' }}</mat-icon>                
+                <input matInput [formControl]="password" [type]="togglePassword ? 'text' : 'password'" [disabled]="processing">
+                <mat-error *ngIf="password.invalid">{{ getPasswordErrorMessage() }}</mat-error>
+            </mat-form-field>
+            
+            <button 
+                [ngClass]="{'inline-processing-btn': processing}" 
+                mat-raised-button 
+                class="login-btn fadeInUp _delay5ms" 
+                color='primary' 
+                (click)="onLogin()" 
+                [disabled] = 'processing || email.invalid || password.invalid'>
+                <span *ngIf="!processing">Login</span>
+                <app-inline-mat-spinner *ngIf="processing"></app-inline-mat-spinner>      
+            </button>            
+
+            <div class="btn-wrapper">
+                <button 
+                    class="fadeInUp _delay5ms"
+                    disabled
+                    mat-button 
+                    matTooltip="Under going development" >
+                    Forgot password ?
+                </button>
+
+                <button 
+                    [disabled]="processing" 
+                    class='fadeInUp _delay6ms' 
+                    matTooltip="Register if you're a first time user" 
+                    mat-button 
+                    routerLink="/register">
+                    Create an account
+                </button>
+            </div>
+        </section>
+    </mat-card>
+</main>

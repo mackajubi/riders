@@ -1,0 +1,221 @@
+/* You can add global styles to this file, and also import other style files */
+@import './theme.scss';
+@import "./assets/css/animate.css";
+@import "./assets/css/delays.min.css";
+
+html, body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+body { 
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background: linear-gradient(90deg, #02c0ec 0%, #1d3767 0%, #01c5f1 100%, #01c5f1 100%);
+}
+
+button {
+    font-size: 12px !important;
+    border-radius: 30px !important;
+}
+
+.inline-processing-btn {
+    min-width: 0px !important;
+    padding: 2px !important;
+    width: fit-content !important;
+}
+
+app-inline-mat-spinner {
+    .mat-progress-spinner {
+       width: 30px !important;
+       height: 30px !important;
+       
+       svg {
+           width: 30px !important;
+           height: 30px !important;
+       }
+   }
+}
+
+.snackBar-cust {
+    background-color: #1caf9a;
+}
+
+.snackBar-err-cust {
+    background-color: #e04b4a;
+    color:white;
+}
+
+.snackBar-err-cust,
+.snackBar-cust {
+    font-family: inherit;
+    font-size: 11px;
+    border-radius: 0px !important;    
+
+    .mat-button-wrapper{
+        color: #000;
+    }
+}
+
+.mat-simple-snackbar {
+    font-size: 12px !important;
+    width: 100%;
+}
+
+
+.mat-snack-bar-container {
+  border-radius: 0px !important;
+  padding: 5px !important;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.5);
+}
+
+.car-type-wrapper {
+    display: flex;
+    align-items: center;
+    
+    img {
+        width: 50px;
+        height: auto;
+        margin: 0px 16px;
+    }
+} 
+
+.user-profile-card-menu {
+    margin-left: 10px;
+    background: linear-gradient(90deg, #02c0ec 0%, #1d3767 0%, #01c5f1 100%, #01c5f1 100%);
+
+    .mat-menu-content:not(:empty) {
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+        width: 214px;
+    }  
+
+    .mat-menu-content {
+        color: #fff;
+
+        .user-profile-img-wrapper {
+            width: 214px;
+            height: 150px;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                margin-top: -21px;
+            }
+        }
+
+        .user-profile-card-details {
+            padding: 0px 10px;
+            text-align: center;
+            margin-bottom: 12px;
+
+            p {
+                font-weight: 300;
+                text-transform: capitalize;
+            }
+        }
+
+        .mat-menu-item {
+            border-radius: 0px !important;
+            height: 40px;
+            line-height: 40px;     
+            color: #fff;        
+            
+            mat-icon {
+                color: #fff;
+            }            
+        }
+    }
+}
+
+.mat-paginator-container {
+    min-height: 40px !important;
+  
+    .mat-paginator-page-size {
+      margin-right: 0px !important;
+      height: 38px !important; 
+  
+      .mat-paginator-page-size-select {
+        margin: -2px 4px 0 4px !important;
+        width: 50px !important;
+      }    
+    }
+  
+    .mat-paginator-range-actions {
+      min-height: 34px !important;
+  
+      .mat-paginator-range-label {
+        margin: 2px 32px 0 24px !important;
+      } 
+  
+      .mat-icon-button {
+  
+        .mat-paginator-icon {
+          width: 24px !important;
+        }
+      }    
+    }
+}
+
+.data-loading {
+  .mat-progress-spinner {
+    width: 30px !important;
+    height: 30px !important;
+    top: 0px;
+      
+    svg {
+    width: 30px !important;
+    height: 30px !important;
+    }
+  }
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 640px) {
+    .snackBar-err-cust, 
+    .snackBar-cust {
+        margin: 0px !important;
+    }
+}
+
+
+@media(min-width:769px){
+    /**  SCROLLBAR */
+
+    .scrollbar_white::-webkit-scrollbar,
+    .scrollbar_black::-webkit-scrollbar{
+        overflow: auto;
+        width: 10px;
+        height: 6px;
+    }
+
+    .scrollbar_white::-webkit-scrollbar-track,
+    .scrollbar_black::-webkit-scrollbar-track {
+        background: rgba(0,0,0,0.1);
+        border: 0px;
+    }
+
+    .scrollbar_white::-webkit-scrollbar-thumb,
+    .scrollbar_black::-webkit-scrollbar-thumb {
+        transition: all 430ms ease-in-out;
+    }
+    
+    .scrollbar_white::-webkit-scrollbar-thumb {
+        background-color: #ffffffa1;
+    }
+
+    .scrollbar_black::-webkit-scrollbar-thumb {
+        background-color: #000000ad;
+    }
+
+    .scrollbar_white::-webkit-scrollbar-thumb:hover {
+        background: #ffffff;
+        cursor: pointer;
+    }
+
+    .scrollbar_black::-webkit-scrollbar-thumb:hover {
+        background: #000000;
+        cursor: pointer;
+    }
+}

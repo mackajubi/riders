@@ -1,0 +1,124 @@
+main {
+    height: fit-content;
+    padding: 10px;
+    
+    .data-loading {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+    }
+
+    .processing {
+        height: 3px;
+        bottom: unset;
+    }
+
+    header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between; 
+        height: 40px;
+        padding: 5px;       
+
+        h1 {
+            font-weight: 300;
+            margin: 0px;
+        }
+    }
+
+    section {   
+        display: grid;
+        grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+        grid-gap: 20px;            
+            
+        mat-card {
+            display: grid;
+            grid-gap: 10px;
+            align-items: center;
+            padding: 10px;
+            border-radius: 0px;
+                
+            .image-wrapper {
+                height: 120px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+
+                img {
+                    width: 100px;
+                    height: auto;
+                    border-radius: 50%;
+                }
+            }
+
+            h2 {
+                font-size: 16px;
+                font-weight: 400;
+                margin: 0px;
+                text-transform: capitalize;
+                text-align: center;
+            }
+
+            div {
+                display: grid;
+                grid-template-columns: 30px auto;
+                align-items: center;
+
+                mat-icon {
+                    font-size: 20px;
+                }
+
+                a,
+                p {
+                    font-size: 12px;
+                    margin: 0px;
+                }
+            } 
+            
+            button {
+                width: 100%;
+                font-weight: 400;
+                text-transform: capitalize;
+            }
+
+            .trip-started {
+                background-color: #1caf9a4d;
+            }
+        }
+
+        .no-rides-available {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 100;
+        }
+    }
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 640px) {
+    main {
+    
+        mat-card {
+
+            header {
+                flex-direction: column;          
+    
+                .mat-form-field {
+                    width: 100%;
+                }
+            }
+        }
+    }    
+}

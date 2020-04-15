@@ -1,0 +1,205 @@
+main {
+    height: fit-content;
+    padding: 10px;
+    display: grid;
+    grid-gap: 10px;    
+    
+    .data-loading {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+    }
+
+    .processing {
+        height: 3px;
+        bottom: unset;
+    }
+
+    mat-card {
+        height: fit-content;
+        padding: 0px;
+        border-radius: 0px;
+
+        header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between; 
+            padding: 5px 5px 0px;  
+            background-color: #fafafa;         
+
+            h1 {
+                font-weight: 300;
+                margin: 0px;
+            }
+
+            .mat-form-field {
+                width: 300px;
+                height: 45px;
+                font-size: 13px;
+            }
+        }
+
+        section {
+            overflow-x: auto;
+
+            table {
+                width: 100%;
+                margin: 0px;
+
+                tr.mat-header-row,
+                tr.mat-footer-row,
+                tr.mat-row {
+                    height: 42px !important;
+                }
+
+                .mat-cell, 
+                .mat-footer-cell {
+                    font-size: 12px;
+                }    
+                
+                .driver-infor-wrapper {
+                    display: grid;
+                    grid-template-columns: 40px auto;
+                    grid-gap: 10px;
+                    align-items: center;
+                    text-transform: capitalize;
+
+                    img {
+                        width: 34px;
+                        height: auto;
+                        border-radius: 50%;
+                    }
+                }
+
+                .mat-column-booking {
+                    width: 50px;
+                    text-align: center;
+                }
+            }
+
+            .no-rides-available {
+                height: 150px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 100;
+            }
+        }
+    }
+
+    mat-card.bookings {
+        height: calc(100vh - 62px);
+        overflow-y: auto;
+
+        header {
+            height: 44px;
+            justify-content: center;
+        }
+
+        section {
+            overflow: hidden;
+
+            .content-wrapper {
+                display: grid;
+                grid-template-columns: 80px auto;
+                align-items: center;
+                grid-gap: 20px;
+                padding: 10px 15px;
+                border-bottom: 1px solid #e0e0e0;
+                position: relative;
+
+                mat-icon.ride-icon {
+                    font-size: 40px;
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #1d3767;
+                    color: #fff;
+                }
+
+                .booking-details {
+                    display: grid;
+                    grid-gap: 5px;
+
+                    h2 {
+                        font-size: 15px;
+                        font-weight: 500;
+                        margin: 0px;
+                        text-transform: capitalize;
+                    }
+
+                    div {
+                        display: grid;
+                        grid-template-columns: 30px auto;
+                        align-items: center;
+
+                        mat-icon {
+                            opacity: .8;
+                            font-size: 20px;
+                        }
+
+                        a,
+                        p {
+                            font-size: 12px;
+                            margin: 0px;
+                        }
+                    }
+                }
+
+                button {
+                    position: absolute;
+                    top: 2px;
+                    right: 3px;
+                    min-width: 0px;
+                    padding: 0px;
+                    width: 36px;
+                    height: 36px;
+
+                    mat-icon {
+                        opacity: .8;
+                        color: #e04b4a;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 885px) {
+    main {
+        display: block;
+    
+        mat-card.bookings {
+            margin-top: 20px;
+            height: fit-content;
+        }
+    }    
+}
+
+@media (max-width: 640px) {
+    main {
+    
+        mat-card {
+
+            header {
+                flex-direction: column;          
+    
+                .mat-form-field {
+                    width: 100%;
+                }
+            }
+        }
+    }    
+}

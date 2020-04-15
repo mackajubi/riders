@@ -1,0 +1,14 @@
+<div class="wrapper">
+  <mat-icon color='warn' class="material-icons-sharp">warning</mat-icon>
+  <div>
+    <h1>{{ message.msg ? message.msg :'Do you want to save the changes' }}</h1>
+    <div class="btn-wrapper">
+      <button tabindex="-1" mat-button (click)="onSave()">
+        {{ message.saveLabel ? message.saveLabel : 'Save' }}
+      </button>
+      <button tabindex="-1" mat-button (click)="onCancel()">
+        {{ message.noLabel ? message.noLabel : 'Cancel' }}
+      </button>
+    </div>
+  </div>
+</div>
