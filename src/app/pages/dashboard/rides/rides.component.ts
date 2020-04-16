@@ -4,6 +4,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { trigger, transition, query, style, stagger, animate } from '@angular/animations';
 import '../../../../assets/js/smtp.js';
 import { Booking } from 'src/app/models/users.model.js';
+import emailjs from 'emailjs-com';
 
 declare let Email: any;
 
@@ -81,9 +82,16 @@ export class RidesComponent implements OnInit {
     this.api.getUsers().filter((user: User) => {
       // A rider cannot book their own ride.
       if (user.rider && user.capacity && (user.id !== this.user.id)) {
-        this.riders.push(user);
-        if (user.bookings.length) {
-          this.userBookedRides.push(user);
+        let foundABooking = false;
+        user.bookings.filter((booking) => {
+          if (booking.userId === this.user.id) {
+            this.userBookedRides.push(user);
+            foundABooking = true;
+          }
+        });
+
+        if (!foundABooking) {
+          this.riders.push(user);
         }
       }
     });
@@ -107,62 +115,71 @@ export class RidesComponent implements OnInit {
     return state;
   }
 
-  onBook(ride: User, index: number) {
+  onBooking(ride: User) {
     this.api.openConfirmationWindow('Do you want to book ' + ride.name + '\'s ride?');
 
     this.api.dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.processing = true;
-        Email.send({
-          Host : this.api.getEmailConfig().host,
-          Username : this.api.getEmailConfig().username,
-          Password : this.api.getEmailConfig().password,
-          To : this.user.email,
-          From : this.api.getEmailConfig().username,
-          Subject : 'IBI Africa Ride Booking',
-          Body : `
-            <h2> Hi ${this.user.name},</h2>
 
-            <p>You can reach your driver on this number: +257-+${ride.tel}. <i>(${ride.name})</i></p>
+        const template_params = {
+          to_email: this.user.email,
+          to_name: this.user.name,
+          from_name: this.api.getEmailJsConfig().from_name,
+          reply_to: this.api.getEmailJsConfig().reply_to,
+          message_html: `
+          <p>Reach out to your driver on this number: +257-+${ride.tel}. <i>(${ride.name})</i></p>
 
-            <p>Thank you for using ride.</p>
-          `
-        }).then((message) => {
-          if (message === 'OK') {
-            ride.bookings.push({
-              id: ride.bookings.length + 1,
-              userId: this.user.id,
-              name: this.user.name,
-              tel: this.user.tel,
-              email: this.user.email,
-              date: new Date(),
-              image: this.user.image,
-            });
-            --ride.capacity;
-            this.userBookedRides.push(ride);
+          <p>Thank you for using riders.</p>
+        `
+        };
 
-            // Update the list of available rides.
-            this.riders.splice(index, 1);
-            this.dataSource = new MatTableDataSource(this.riders);
-            setTimeout(() => {
-              this.dataSource.paginator = this.paginator;
-              this.dataSource.sort = this.sort;
-            });
+        emailjs.send(
+          this.api.getEmailJsConfig().service_id,
+          this.api.getEmailJsConfig().template_id,
+          template_params,
+          this.api.getEmailJsConfig().user_id)
+        .then(((response) => {
+          ride.bookings.push({
+            id: ride.bookings.length + 1,
+            userId: this.user.id,
+            name: this.user.name,
+            tel: this.user.tel,
+            email: this.user.email,
+            date: new Date(),
+            image: this.user.image,
+          });
+          --ride.capacity;
+          this.userBookedRides.push(ride);
 
-            this.api.openSnackBar(
-              'Please check your email for further details. Check in spam mails incase it\'s not in the inbox.',
-              'suc-lg'
-            );
-          } else {
-            this.api.openSnackBar('Operation Unsuccessful::' + message, 'err-lg');
-          }
+          // Update the list of available rides.
+          this.riders.filter((item, index: number) => {
+            if (item.id === ride.id) {
+              this.riders.splice(index, 1);
+            }
+          });
+
+          this.dataSource = new MatTableDataSource(this.riders);
+          setTimeout(() => {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          });
+
+          this.api.openSnackBar(
+            'Please check your email for further details. Check in spam mails incase it\'s not in the inbox.',
+            'suc-lg'
+          );
+
           this.processing = false;
-        });
+        }), ((error) => {
+          this.api.openSnackBar('Operation Unsuccessful::' + JSON.stringify(error), 'err-lg');
+          this.processing = false;
+        }));
       }
     });
   }
 
-  onRemove(user: User, index: number) {
+  onRemoveBooking(user: User, index: number) {
     this.processing = true;
 
     this.api.getUsers().filter((rider) => {

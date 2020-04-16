@@ -63,13 +63,13 @@
           <!-- Booking Column -->
           <ng-container matColumnDef="booking">
             <th mat-header-cell *matHeaderCellDef> Booking </th>
-            <td mat-cell *matCellDef="let row; index as i">
+            <td mat-cell *matCellDef="let row">
               <button 
                 [disabled]="hasBookedRide(row) || processing"
                 color='primary'
                 mat-raised-button
                 matTooltip="Book this ride"
-                (click)="onBook(row, i)">
+                (click)="onBooking(row)">
                 {{ hasBookedRide(row) ? 'Booked' : 'Book ride' }}
               </button>
             </td>
@@ -112,7 +112,7 @@
             </div>
           </div>
 
-          <button mat-button (click)="onRemove(booking, i)" matTooltip="Delete the booking.">
+          <button mat-button (click)="onRemoveBooking(booking, i)" matTooltip="Delete the booking.">
             <mat-icon class="material-icons-sharp">clear</mat-icon>
           </button>
         </div>

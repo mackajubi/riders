@@ -26,12 +26,14 @@ export interface User {
 })
 export class AppService {
   private user: User;
-  private emailConfig = {
-    host: 'smtp.elasticemail.com',
-    username: 'mactechlabs1@gmail.com',
-    password: '48E61F5E3E9F3FC1C7ACA9126598465F806F'
-  };
 
+  private emailjsConfig = {
+    user_id: 'user_xldphvzT0CG3ziWgi6caY',
+    service_id: 'sendgrid',
+    template_id: 'template_Kf6EwQZf',
+    from_name: 'https://ride-3a4cc.firebaseapp.com',
+    reply_to: 'kajubimark2@gmail.com',
+  };
   dialogRef;
 
   userImages = [
@@ -76,8 +78,8 @@ export class AppService {
    users.push(user);
   }
 
-  getEmailConfig() {
-    return this.emailConfig;
+  getEmailJsConfig() {
+    return this.emailjsConfig;
   }
 
   openConfirmationWindow(message: string) {

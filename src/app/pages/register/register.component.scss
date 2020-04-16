@@ -20,15 +20,49 @@ main {
         align-items: center;
         justify-content: center;
         margin: 10px;
+        padding: 0px;
 
-        img {
-            width: 100%;
-            height: auto;
+        header {
+            height: 48px;
+            display: grid;
+            grid-template-columns: 48px auto;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background-color: #fff;       
+            border-radius: 4px 4px 0px 0px;  
+            box-shadow: 0px 2px 3px -1px rgba(0, 0, 0, 0.36);
+    
+            button {
+                min-width: 0px;
+                height: 100%;
+                width: 100%;
+                padding: 0px;
+                border-radius: 0px !important;
+            }
+    
+            h1 {
+                margin: 0px;
+                font-size: 15px;
+                font-weight: 300;
+            }
         }
+
+        .img-wrapper {
+            padding: 16px;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
 
         section {
             display: grid;
             grid-gap: 10px;
+            padding: 16px;
 
             h3 {
                 text-align: center;
@@ -54,7 +88,7 @@ main {
         }
         
         .btn-wrapper {
-            padding: 10px 0px;
+            padding: 10px 16px 16px;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -70,10 +104,16 @@ main {
 /* MEDIA QUERIES */
 @media (max-width: 640px) {
     main {
+        width: 100%;
 
         mat-card {
             grid-template-columns: auto;
-            margin: 10px;            
+            margin: 0px;            
+            border-radius: 0px;
+
+            header {
+                border-radius: 0px;
+            }
         }
     }
 }

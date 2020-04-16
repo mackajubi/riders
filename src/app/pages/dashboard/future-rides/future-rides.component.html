@@ -26,7 +26,7 @@
                 <a [href]="'call:'+ user.tel" target="_blank">{{ user.tel }}</a>              
             </div> 
             
-            <button mat-raised-button color='warn' [disabled]="processing || user.startTrip" (click)="onStartTrip(user)" [ngClass]="{'trip-started': user.startTrip}">
+            <button mat-raised-button color='warn' [disabled]="user.startTrip" (click)="onStartTrip(user)" [ngClass]="{'trip-started': user.startTrip}">
                 {{ user.startTrip ? 'Trip started' : 'Start Trip' }}
             </button>
         </mat-card>
